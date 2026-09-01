@@ -1,6 +1,5 @@
 # Giza Power Plant Multi-Physics Simulation Engine
 
-[![CI](https://github.com/altninja/pyramid-sim/actions/workflows/ci.yml/badge.svg)](https://github.com/altninja/pyramid-sim/actions/workflows/ci.yml)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Three.js](https://img.shields.io/badge/Three.js-r170-black.svg)](https://threejs.org/)
@@ -94,7 +93,7 @@ Exothermic acid-metal reaction kinetics generate pure hydrogen gas:
    where $M_{\text{mix}} = X_{\text{H2}} M_{\text{H2}} + (1 - X_{\text{H2}}) M_{\text{air}}$, smoothly shifting sound speed from $343.2\text{ m/s}$ (air) up to $1290.0\text{ m/s}$ (pure $\text{H}_2$).
 
 ### 2.3 Grand Gallery Resonant Acoustic Waveguide
-The corbelled gallery functions as an acoustic amplifier driven by 27 pairs of Helmholtz resonators tuned to the $F\#$ harmonic series:
+The corbelled gallery functions as an acoustic amplifier driven by 27 pairs of Helmholtz resonators tuned to the F# harmonic series:
 1. **1D Inhomogeneous Lossy Wave Equation**:
    $$\frac{1}{c^2(z, t)} \frac{\partial^2 p}{\partial t^2} - \frac{\partial^2 p}{\partial z^2} + \frac{2\alpha}{c(z, t)} \frac{\partial p}{\partial t} = \sum_{m=1}^{27} \delta(z - z_m) \rho \frac{\partial U_m}{\partial t}$$
 2. **Coupled Helmholtz Resonator Dynamic ODE**:
@@ -106,7 +105,7 @@ The 4 vertical granite leaves and wainscoting slots act as a cascaded 2-port aco
    $$\mathbf{M}_{\text{total}}(f) = \prod_{k=1}^N \begin{bmatrix} \cos(k_c L_k) & j Z_k \sin(k_c L_k) \\ j Z_k^{-1} \sin(k_c L_k) & \cos(k_c L_k) \end{bmatrix}, \quad Z_k = \frac{\rho c}{S_k}$$
 2. **Transmission Loss (TL)**:
    $$\text{TL}(f) = 20 \log_{10} \left| \frac{1}{2} \left( A\sqrt{\frac{Z_L}{Z_0}} + \frac{B}{\sqrt{Z_0 Z_L}} + C\sqrt{Z_0 Z_L} + D\sqrt{\frac{Z_0}{Z_L}} \right) \right|$$
-   Rejects low-frequency infrasonic surges ($> 15\text{ dB}$ attenuation at $7.83\text{ Hz}$) while maintaining high transmission ($< 0.1\text{ dB}$ loss) for $F\#$ harmonics.
+   Rejects low-frequency infrasonic surges ($> 15\text{ dB}$ attenuation at $7.83\text{ Hz}$) while maintaining high transmission ($< 0.1\text{ dB}$ loss) for F# harmonics.
 
 ### 2.5 King's Chamber Rose Granite Piezoelectric Transduction
 43 monolithic Aswan rose granite beams across 5 relieving tiers transduce acoustic vibration into high electric potentials:
@@ -138,7 +137,7 @@ High-voltage oscillating fields and acoustic pressure pump atomic hydrogen into 
 | **Granite** | Piezoelectric $d_{33}^{\text{eff}}$ | $0.35\text{ pC/N}$ | Polycrystalline tensor |
 | **Granite** | Piezoelectric $g_{33}^{\text{eff}}$ | $0.012\text{ V}\cdot\text{m/N}$ | Voltage coefficient |
 | **Granite** | Acoustic Quality Factor $Q$ | $350$ | Relieving beam mechanical Q |
-| **Acoustics** | $F\#$ Fundamental Target | $438.0\text{ Hz}$ | Grand Gallery tuning frequency |
+| **Acoustics** | F# Fundamental Target | $438.0\text{ Hz}$ | Grand Gallery tuning frequency |
 | **Chemistry** | $\Delta H_{\text{rxn}}^\circ$ | $-153.89\text{ kJ/mol}$ | $\text{Zn} + 2\text{HCl} \rightarrow \text{ZnCl}_2 + \text{H}_2$ |
 | **Gas** | Sound Speed $c_{\text{H2}}$ ($20^\circ\text{C}$) | $1290.0\text{ m/s}$ | Pure hydrogen gas |
 | **Gas** | Sound Speed $c_{\text{air}}$ ($20^\circ\text{C}$) | $343.2\text{ m/s}$ | Dry standard atmosphere |
@@ -154,7 +153,7 @@ High-voltage oscillating fields and acoustic pressure pump atomic hydrogen into 
 The simulation engine includes 5 scientific scenario presets:
 
 1. **`baseline`**:
-   Standard balanced operation. Earth seismic pulses ($7.83\text{ Hz}$) and subterranean water hammer oscillations drive the acoustic column, Queen's Chamber reactions inject progressive $\text{H}_2$, Grand Gallery resonators amplify $F\#$ acoustic standing waves, rose granite beams stack multi-kilovolt piezoelectric potentials, and King's Chamber maser beams microwave power through the shafts.
+   Standard balanced operation. Earth seismic pulses ($7.83\text{ Hz}$) and subterranean water hammer oscillations drive the acoustic column, Queen's Chamber reactions inject progressive $\text{H}_2$, Grand Gallery resonators amplify F# acoustic standing waves, rose granite beams stack multi-kilovolt piezoelectric potentials, and King's Chamber maser beams microwave power through the shafts.
 
 2. **`acoustic_peak`**:
    Grand Gallery Helmholtz resonators sharply calibrated to maximum $Q$ ($Q = 250$), demonstrating optimal resonant standing wave buildup and peak flexural mechanical stresses on the rose granite relieving beams.
