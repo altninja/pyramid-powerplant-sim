@@ -1,0 +1,182 @@
+{
+  "version": "1.0.0",
+  "defaultScenarioId": "baseline",
+  "generated_at": "2026-09-01T10:57:10.318177+00:00",
+  "scenarios": [
+    {
+      "id": "baseline",
+      "name": "Baseline Resonant Run (10s)",
+      "description": "Standard 10-second multi-physics simulation with hydrogen injection, 7.83 Hz infrasonic drive, and quartz excitation.",
+      "duration": 3.0,
+      "dt_macro": 0.01,
+      "tags": [
+        "baseline",
+        "resonance",
+        "maser"
+      ],
+      "recommended": true,
+      "metadata": {
+        "duration_s": 2.9799999999999804,
+        "total_frames_recorded": 150,
+        "peak_maser_radiated_power_w": 0.0,
+        "mean_maser_radiated_power_w": 0.0,
+        "peak_piezo_voltage_v": 1.5192863982271152,
+        "peak_gallery_pressure_pa": 584.9308715499806,
+        "final_h2_mole_fraction_qc": 0.015837135202769824,
+        "final_h2_mole_fraction_kc": 8.372076504092203e-33,
+        "total_energy_in_j": 171743814.95506352,
+        "total_energy_out_j": 0.0,
+        "total_energy_loss_j": 145738885.54035595,
+        "final_stored_energy_j": 26005714.367038686,
+        "max_relative_energy_error": 5.417270442639778e-05,
+        "mean_relative_energy_error": 3.7968393311582386e-05,
+        "all_steps_conserved": true,
+        "total_sparks": 0
+      },
+      "binUrl": "./scenarios/baseline.bin",
+      "bin_url": "./scenarios/baseline.bin",
+      "jsonUrl": "./scenarios/baseline.json",
+      "json_url": "./scenarios/baseline.json"
+    },
+    {
+      "id": "acoustic_peak",
+      "name": "Acoustic Peak Mode",
+      "description": "High-amplitude acoustic lock in the Grand Gallery resonator rack with steep standing wave pressure gradients.",
+      "duration": 3.0,
+      "dt_macro": 0.01,
+      "tags": [
+        "acoustic",
+        "resonance",
+        "high-pressure"
+      ],
+      "recommended": false,
+      "metadata": {
+        "duration_s": 2.9799999999999804,
+        "total_frames_recorded": 150,
+        "peak_maser_radiated_power_w": 0.0,
+        "mean_maser_radiated_power_w": 0.0,
+        "peak_piezo_voltage_v": 1.513262731079171,
+        "peak_gallery_pressure_pa": 583.844456220188,
+        "final_h2_mole_fraction_qc": 0.015837135202769824,
+        "final_h2_mole_fraction_kc": 8.372076504092203e-33,
+        "total_energy_in_j": 171746139.0956418,
+        "total_energy_out_j": 0.0,
+        "total_energy_loss_j": 145739625.19965336,
+        "final_stored_energy_j": 26007295.74122932,
+        "max_relative_energy_error": 5.400013981921843e-05,
+        "mean_relative_energy_error": 3.78329406837273e-05,
+        "all_steps_conserved": true,
+        "total_sparks": 0
+      },
+      "binUrl": "./scenarios/acoustic_peak.bin",
+      "bin_url": "./scenarios/acoustic_peak.bin",
+      "jsonUrl": "./scenarios/acoustic_peak.json",
+      "json_url": "./scenarios/acoustic_peak.json"
+    },
+    {
+      "id": "full_maser_power",
+      "name": "Full Maser Power Output",
+      "description": "High hydrogen mole fraction and kilovolt piezoelectric pumping driving saturated 1.4204 GHz maser beam emission.",
+      "duration": 3.0,
+      "dt_macro": 0.01,
+      "tags": [
+        "maser",
+        "quantum",
+        "high-power"
+      ],
+      "recommended": false,
+      "metadata": {
+        "duration_s": 2.9799999999999804,
+        "total_frames_recorded": 150,
+        "peak_maser_radiated_power_w": 0.0,
+        "mean_maser_radiated_power_w": 0.0,
+        "peak_piezo_voltage_v": 1.5191006853802793,
+        "peak_gallery_pressure_pa": 584.8925199433878,
+        "final_h2_mole_fraction_qc": 1.0,
+        "final_h2_mole_fraction_kc": 3.64795744765716e-30,
+        "total_energy_in_j": 1695916547.57676,
+        "total_energy_out_j": 0.0,
+        "total_energy_loss_j": 146130859.17919716,
+        "final_stored_energy_j": 1549787997.2484686,
+        "max_relative_energy_error": 9.902237281877953e-06,
+        "mean_relative_energy_error": 2.085845370518054e-06,
+        "all_steps_conserved": true,
+        "total_sparks": 0
+      },
+      "binUrl": "./scenarios/full_maser_power.bin",
+      "bin_url": "./scenarios/full_maser_power.bin",
+      "jsonUrl": "./scenarios/full_maser_power.json",
+      "json_url": "./scenarios/full_maser_power.json"
+    },
+    {
+      "id": "dry_run_no_gas",
+      "name": "Dry Run (No Hydrogen Gas)",
+      "description": "Acoustic and seismic drive in standard atmospheric air without chemical reaction, demonstrating sub-threshold behavior.",
+      "duration": 3.0,
+      "dt_macro": 0.01,
+      "tags": [
+        "inert",
+        "sub-threshold",
+        "control"
+      ],
+      "recommended": false,
+      "metadata": {
+        "duration_s": 2.9799999999999804,
+        "total_frames_recorded": 150,
+        "peak_maser_radiated_power_w": 0.0,
+        "mean_maser_radiated_power_w": 0.0,
+        "peak_piezo_voltage_v": 1.5192863982271152,
+        "peak_gallery_pressure_pa": 584.9308715499806,
+        "final_h2_mole_fraction_qc": 0.0,
+        "final_h2_mole_fraction_kc": 0.0,
+        "total_energy_in_j": 157013395.79237613,
+        "total_energy_out_j": 0.0,
+        "total_energy_loss_j": 145737157.40769207,
+        "final_stored_energy_j": 11277008.608308658,
+        "max_relative_energy_error": 7.310785675557132e-05,
+        "mean_relative_energy_error": 5.6780162447778125e-05,
+        "all_steps_conserved": true,
+        "total_sparks": 0
+      },
+      "binUrl": "./scenarios/dry_run_no_gas.bin",
+      "bin_url": "./scenarios/dry_run_no_gas.bin",
+      "jsonUrl": "./scenarios/dry_run_no_gas.json",
+      "json_url": "./scenarios/dry_run_no_gas.json"
+    },
+    {
+      "id": "high_seismic",
+      "name": "High Seismic Transient",
+      "description": "Strong water hammer shock and bedrock acceleration transient testing structural relieving beam stress limits.",
+      "duration": 3.0,
+      "dt_macro": 0.01,
+      "tags": [
+        "seismic",
+        "water-hammer",
+        "transient"
+      ],
+      "recommended": false,
+      "metadata": {
+        "duration_s": 2.9799999999999804,
+        "total_frames_recorded": 150,
+        "peak_maser_radiated_power_w": 0.0,
+        "mean_maser_radiated_power_w": 0.0,
+        "peak_piezo_voltage_v": 3.797519572371108,
+        "peak_gallery_pressure_pa": 1462.1833603501368,
+        "final_h2_mole_fraction_qc": 0.015837135202769824,
+        "final_h2_mole_fraction_kc": 8.372076504092203e-33,
+        "total_energy_in_j": 996094683.2862755,
+        "total_energy_out_j": 0.0,
+        "total_energy_loss_j": 910869577.340983,
+        "final_stored_energy_j": 85229935.6865352,
+        "max_relative_energy_error": 6.804967900859838e-05,
+        "mean_relative_energy_error": 5.2423943307683684e-05,
+        "all_steps_conserved": true,
+        "total_sparks": 0
+      },
+      "binUrl": "./scenarios/high_seismic.bin",
+      "bin_url": "./scenarios/high_seismic.bin",
+      "jsonUrl": "./scenarios/high_seismic.json",
+      "json_url": "./scenarios/high_seismic.json"
+    }
+  ]
+}

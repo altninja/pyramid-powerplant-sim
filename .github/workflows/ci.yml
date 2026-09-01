@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  python-test:
+    name: Python Multi-Physics Test Suite
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11"]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Run PyTest test suite
+        run: |
+          pytest tests/ -v
+
+      - name: Run batch scenario generation
+        run: |
+          python -m engine.run_sim --all-scenarios --duration 1.0 --out-dir viewer/public/scenarios --validate-schema
+
+  viewer-build:
+    name: 3D WebGL Viewer Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: viewer/package-lock.json
+
+      - name: Install frontend dependencies
+        working-directory: viewer
+        run: |
+          npm install
+
+      - name: Build static viewer
+        working-directory: viewer
+        run: |
+          npm run build

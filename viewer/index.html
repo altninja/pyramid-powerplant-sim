@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Khufu Giza Power Plant 3D Replay & Telemetry Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./src/style.css" />
+</head>
+<body>
+  <canvas id="webgl-canvas"></canvas>
+
+  <div id="ui-container">
+    <header class="top-bar glass-panel interactive">
+      <div class="brand-title">
+        <div class="brand-icon"></div>
+        <div class="title-text">
+          <h1>Khufu Giza Power Plant</h1>
+          <p>Christopher Dunn Acoustical-Electromechanical-Maser Simulation</p>
+        </div>
+      </div>
+      <div class="top-bar-actions">
+        <div class="scenario-selector-wrap" title="Select pre-computed multi-physics scenario">
+          <span class="scenario-label">SCENARIO:</span>
+          <select id="scenario-selector" class="select-scenario">
+            <option value="sample">Sample Telemetry (JSON)</option>
+          </select>
+        </div>
+        <input type="file" id="file-input-json" accept=".json,.bin,application/json,application/octet-stream" style="display: none;" />
+        <button class="btn btn-cyan" id="btn-upload-json" title="Load custom simulation JSON or BIN">
+          <span>📂 Load File</span>
+        </button>
+        <button class="btn" id="btn-toggle-oscilloscopes" title="Toggle Live Waveforms [O]">
+          <span>📈 Oscilloscopes</span>
+          <span class="btn-key">O</span>
+        </button>
+        <button class="btn" id="btn-toggle-inspector" title="Toggle Physical Telemetry HUD [I]">
+          <span>📊 Inspector</span>
+          <span class="btn-key">I</span>
+        </button>
+        <button class="btn" id="btn-toggle-interp" title="Toggle Hermite / Linear Interpolation">
+          <span id="interp-label">Hermite Sub-frame</span>
+        </button>
+        <div class="badge playing" id="status-badge">
+          <span class="badge-dot"></span>
+          <span>LOADING TELEMETRY...</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="workspace-row">
+      <aside class="sidebar interactive">
+        <div class="glass-panel panel-section">
+          <div class="section-header">
+            <span>Cutaway Cross-Section</span>
+            <span class="btn-key">C</span>
+          </div>
+          <div class="btn-grid">
+            <button class="btn active" id="btn-cut-east">
+              <span>East Cutaway</span>
+            </button>
+            <button class="btn" id="btn-cut-south">
+              <span>South Cutaway</span>
+            </button>
+            <button class="btn" id="btn-cut-quad">
+              <span>Quadrant</span>
+            </button>
+            <button class="btn" id="btn-cut-none">
+              <span>Full Outer</span>
+            </button>
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-label">
+              <span>Casing Opacity</span>
+              <span id="opacity-val">18%</span>
+            </div>
+            <input type="range" class="slider" id="slider-opacity" min="0" max="100" value="18" />
+          </div>
+
+          <div class="slider-group">
+            <button class="btn" id="btn-toggle-wireframe" style="width: 100%; margin-top: 4px;">
+              <span>Toggle Gold Wireframe</span>
+              <span class="btn-key">W</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="glass-panel panel-section">
+          <div class="section-header">
+            <span>Multi-Physics Visual Layers</span>
+          </div>
+          <div class="btn-stack">
+            <label class="layer-toggle-row">
+              <span><span class="layer-indicator" style="background: #38bdf8;"></span>Acoustic Heatmap</span>
+              <span class="switch">
+                <input type="checkbox" id="layer-acoustic" checked />
+                <span class="slider-switch"></span>
+              </span>
+            </label>
+            <label class="layer-toggle-row">
+              <span><span class="layer-indicator" style="background: #10b981;"></span>Hydrogen Gas Flow</span>
+              <span class="switch">
+                <input type="checkbox" id="layer-hydrogen" checked />
+                <span class="slider-switch"></span>
+              </span>
+            </label>
+            <label class="layer-toggle-row">
+              <span><span class="layer-indicator" style="background: #c084fc;"></span>Piezo Beam Aura</span>
+              <span class="switch">
+                <input type="checkbox" id="layer-piezo" checked />
+                <span class="slider-switch"></span>
+              </span>
+            </label>
+            <label class="layer-toggle-row">
+              <span><span class="layer-indicator" style="background: #00f2fe;"></span>Microwave Shaft Beams</span>
+              <span class="switch">
+                <input type="checkbox" id="layer-microwave" checked />
+                <span class="slider-switch"></span>
+              </span>
+            </label>
+            <label class="layer-toggle-row">
+              <span><span class="layer-indicator" style="background: #ff9f43;"></span>Hydraulic Shockwaves</span>
+              <span class="switch">
+                <input type="checkbox" id="layer-hydraulic" checked />
+                <span class="slider-switch"></span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div class="glass-panel panel-section">
+          <div class="section-header">
+            <span>Chamber Zoom Presets</span>
+          </div>
+          <div class="btn-stack">
+            <button class="btn active" data-preset="Full Pyramid">
+              <span>1. Full Pyramid Overview</span>
+              <span class="btn-key">1</span>
+            </button>
+            <button class="btn" data-preset="Subterranean Chamber">
+              <span>2. Subterranean Chamber</span>
+              <span class="btn-key">2</span>
+            </button>
+            <button class="btn" data-preset="Queen's Chamber">
+              <span>3. Queen's Chemical Reactor</span>
+              <span class="btn-key">3</span>
+            </button>
+            <button class="btn" data-preset="Grand Gallery">
+              <span>4. Grand Gallery Resonators</span>
+              <span class="btn-key">4</span>
+            </button>
+            <button class="btn" data-preset="King's Chamber & Relieving Beams">
+              <span>5. King's Transducer Beams</span>
+              <span class="btn-key">5</span>
+            </button>
+            <button class="btn" data-preset="Shaft Beaming">
+              <span>6. Shaft Waveguide Beaming</span>
+              <span class="btn-key">6</span>
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <div class="plots-drawer glass-panel" id="plots-drawer"></div>
+
+      <div style="display: flex; flex-direction: column; gap: 12px; max-height: 100%; pointer-events: none;">
+        <div id="inspector-container" class="interactive"></div>
+
+        <section class="glass-panel panel-section interactive" id="info-panel" style="width: 340px; display: none;">
+          <div class="section-header">
+            <span id="info-heading">Khufu Outer Envelope</span>
+            <button class="btn btn-icon" id="btn-info-close" style="width: 20px; height: 20px; font-size: 0.7rem;">✕</button>
+          </div>
+          <div class="hud-metric-row">
+            <span class="hud-label">Dimensions:</span>
+            <span class="hud-value" id="info-val-0">230.36 × 230.36 m (440 cu)</span>
+          </div>
+          <div class="hud-metric-row">
+            <span class="hud-label">Datum / Elevation:</span>
+            <span class="hud-value" id="info-val-1">Height: 146.58 m (280 cu)</span>
+          </div>
+          <div class="hud-metric-row">
+            <span class="hud-label">Physics Role:</span>
+            <span class="hud-value cyan" id="info-val-2">Schumann Ground Resonator</span>
+          </div>
+          <div class="hud-metric-row">
+            <span class="hud-label">Volume:</span>
+            <span class="hud-value gold" id="info-val-3">2,593,283 m³</span>
+          </div>
+          <div class="info-desc" id="info-description" style="font-size: 0.72rem; color: var(--text-muted); line-height: 1.4; margin-top: 4px;">
+            440 × 280 royal cubit pyramid structure functioning as a massive acoustic resonator coupled to Earth Schumann frequencies (7.83 Hz fundamental).
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="timeline-dock glass-panel interactive">
+      <div class="timeline-row">
+        <div class="timeline-controls">
+          <button class="btn btn-icon" id="btn-timeline-reset" title="Reset to Start [R / Home]">⏮</button>
+          <button class="btn btn-icon" id="btn-timeline-reverse" title="Reverse Playback [J]">◀</button>
+          <button class="btn btn-icon" id="btn-timeline-step-back" title="Step -1 Frame [Left Arrow]">⏪</button>
+          <button class="btn btn-icon btn-primary" id="btn-timeline-play" title="Play / Pause [Space / K]">⏸</button>
+          <button class="btn btn-icon" id="btn-timeline-step-fwd" title="Step +1 Frame [Right Arrow]">⏩</button>
+          <button class="btn btn-icon" id="btn-timeline-forward" title="Forward Playback [L]">▶</button>
+          <button class="btn btn-icon" id="btn-timeline-loop" title="Toggle Looping">🔁</button>
+          <button class="btn btn-icon" id="btn-timeline-loop-range" title="Toggle Custom Range Looping [tA, tB]">⇥⇤</button>
+        </div>
+
+        <div class="timeline-slider-wrap">
+          <div class="loop-range-track-container">
+            <div class="loop-range-bar" id="loop-range-bar" style="left: 0%; width: 100%;"></div>
+            <input type="range" class="timeline-slider" id="timeline-slider" min="0" max="1000" value="0" />
+          </div>
+          <div class="timeline-readout">
+            <div id="timeline-time-text">
+              <span class="time-current">00:00.000</span> / <span class="time-total">00:03.000</span>
+            </div>
+            <div class="loop-range-controls" id="loop-range-controls">
+              <button class="btn-range" id="btn-range-set-a" title="Set Loop Range In-Point (tA)">[A</button>
+              <span class="range-time" id="range-time-a">00:00.000</span>
+              <span class="range-sep">⟷</span>
+              <span class="range-time" id="range-time-b">00:03.000</span>
+              <button class="btn-range" id="btn-range-set-b" title="Set Loop Range Out-Point (tB)">B]</button>
+            </div>
+            <div id="timeline-frame-text">[Frame 001/150]</div>
+          </div>
+        </div>
+
+        <div class="speed-pills" id="speed-pills-container">
+          <button class="speed-pill" data-speed="0.1">0.1×</button>
+          <button class="speed-pill" data-speed="0.25">0.25×</button>
+          <button class="speed-pill" data-speed="0.5">0.5×</button>
+          <button class="speed-pill active" data-speed="1.0">1.0×</button>
+          <button class="speed-pill" data-speed="2.0">2.0×</button>
+          <button class="speed-pill" data-speed="5.0">5.0×</button>
+        </div>
+      </div>
+
+      <div class="timeline-secondary-row">
+        <div class="bookmark-bar" id="bookmark-bar">
+          <span class="bookmark-title">⚡ EVENTS:</span>
+          <button class="bookmark-pill" id="bm-rxn" data-event="rxn" title="Jump to Reaction Start & Queen's Chamber">⚡ Rxn Start</button>
+          <button class="bookmark-pill" id="bm-acoustic" data-event="acoustic" title="Jump to Acoustic Lock & Grand Gallery">🎵 Acoustic Lock</button>
+          <button class="bookmark-pill" id="bm-piezo" data-event="piezo" title="Jump to Piezo Peak & King's Chamber">💎 Piezo Peak</button>
+          <button class="bookmark-pill" id="bm-maser" data-event="maser" title="Jump to Maser Emission & Shaft Beaming">📡 Maser Emission</button>
+          <button class="bookmark-pill" id="bm-spark" data-event="spark" title="Jump to Spark Breakdown & Coffer">💥 Spark Breakdown</button>
+        </div>
+
+        <div class="bottom-bar" id="bottom-presets-bar">
+          <button class="preset-pill active" data-preset="Full Pyramid">1. Full View</button>
+          <button class="preset-pill" data-preset="Subterranean Chamber">2. Subterranean</button>
+          <button class="preset-pill" data-preset="Queen's Chamber">3. Queen's Chamber</button>
+          <button class="preset-pill" data-preset="Grand Gallery">4. Grand Gallery</button>
+          <button class="preset-pill" data-preset="King's Chamber & Relieving Beams">5. King's & Beams</button>
+          <button class="preset-pill" data-preset="Shaft Beaming">6. Shaft Beaming</button>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <div id="drop-overlay">
+    <div class="drop-modal">
+      <div class="drop-icon">⤓</div>
+      <div class="drop-title">LOAD TELEMETRY DATASET</div>
+      <div class="drop-subtitle">Drop your exported simulation JSON file here to replay multi-physics telemetry</div>
+    </div>
+  </div>
+
+  <script type="module" src="./src/main.ts"></script>
+</body>
+</html>

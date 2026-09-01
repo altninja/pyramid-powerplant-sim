@@ -1,0 +1,30 @@
+{
+  "name": "pyramid-powerplant-sim",
+  "version": "1.0.0",
+  "description": "Multi-physics simulation engine of Christopher Dunn's Giza Power Plant hypothesis",
+  "scripts": {
+    "dev": "npm --prefix viewer run dev",
+    "build": "npm --prefix viewer run build",
+    "preview": "npm --prefix viewer run preview",
+    "test:py": "pytest tests/ -v",
+    "test:viewer": "npm --prefix viewer run build",
+    "test": "npm run test:py && npm run test:viewer",
+    "sim:baseline": "python -m engine.run_sim --scenario baseline --duration 5.0 --out viewer/public/sample_telemetry.json",
+    "sim:all": "python -m engine.run_sim --all-scenarios --duration 5.0 --out-dir viewer/public/scenarios --format all --validate-schema"
+  },
+  "keywords": [
+    "pyramid",
+    "giza",
+    "christopher-dunn",
+    "multi-physics",
+    "simulation",
+    "piezoelectric",
+    "acoustics",
+    "schumann-resonance",
+    "maser",
+    "threejs",
+    "webgl"
+  ],
+  "author": "Christopher Dunn Giza Power Plant Simulation Contributors",
+  "license": "MIT"
+}
